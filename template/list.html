@@ -1,4 +1,6 @@
+
 <!DOCTYPE html>
+
 <html>
 <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -40,15 +42,18 @@
     </div>
   </nav>
 
-<br>
-<br>
-<br>
-
-
-
-
-
 {% for i in list1 %}
+
+<div class="alert alert-info" role="alert">
+   Personal Details Of <b>{{i.name}}</b>
+</div>
+{% endfor %}
+
+
+
+<body>
+{% for i in list1 %}
+
 <b>Name-</b><button type="button" class="btn btn-danger">{{i.name}}</button>
 <br>
 <br>
@@ -58,15 +63,27 @@
 <b>Adhaar Number-</b><button type="button" class="btn btn-primary">{{i.adhaar_number}}</button>
 <br>
 <br>
-<b>Contact Number</b><button type="button" class="btn btn-secondary">{{i.contact}}</button>
+<b>Contact Number-</b><button type="button" class="btn btn-secondary">{{i.contact}}</button>
 <br>
 <br>
 <b>Email-</b><button type="button" class="btn btn-success">{{i.email}}</button>
 <br>
-<br>
-<b>Income Tax Return</b><button type="button" class="btn btn-dark">{{i.income_taxreturn}}</button>
+<br>  
+{% if i.income_taxreturn is False  %}
+
+  <b>Income Tax Return-</b><button type="button" class="btn btn-dark">Not Filled</button>
+
+{% else %}
+
+  <b>Income Tax Return-</b><button type="button" class="btn btn-primary"> Filled</button>
+
+  <a href="{{ MEDIA_URL }}{{i.Return}}" type="button" class="btn btn-primary">Download</a>
+
+{% endif%}
 <br>
 <br>
 <b>GST Number-</b>  <button type="button" class="btn btn-info">{{i.gst_number}}</button>
-</div>
 {% endfor %}
+</div>
+</body>
+</html>

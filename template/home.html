@@ -18,7 +18,7 @@
 
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Home</a>
+    <a class="navbar-brand" href="/home">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,4 +40,31 @@
     </div>
   </nav>
 
+  <div class="alert alert-info" role="alert">
+    Pending Income Tax Returns
+  </div>
+
+
+  <tr>
+{% for i in pending %}
+<td><button type="button" class="btn btn-success">
+  <a class="btn-btn-success" style="color:inherit">{{i.name}}</a>
+</button>
+</td>
+
+</tr>
+
+<tr>
+<form method="POST" enctype="multipart/form-data" action="/updateitr?name={{i.name}}">
+  {% csrf_token %}
+  
+<td>
+<input type ="file" name='myfile'>
+<button type="submit" class="btn btn-primary">Update</button>
+</td>
+</form>
+</tr>
+<br>
+<br>
+ {% endfor %}
   </html>
