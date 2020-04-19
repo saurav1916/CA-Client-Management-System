@@ -49,9 +49,10 @@
   
 {% for i in list %}
 <button type="button" class="btn btn-success">
-  <a class="btn-btn-success" style="color:inherit" href="/clientdetail?name={{i.name}}">{{i.name}}</a>
+  <a class="btn-btn-success" style="color:inherit" href="/clientdetail?id={{i.id}}">{{i.name}}</a>
 </button>
 <a class="btn btn-danger" type="button" href="/deleteclient?name={{i.name}}">Delete</a>
+<a class='btn btn-warning' type ="button" href="/editclient?id={{i.id}}">Edit</a>
 <br>
 <br>
 {% endfor %}

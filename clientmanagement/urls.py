@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from client.views import home,add_Client,submit,view_client,client_detail,update_itr,delete_client
+from client.views import home,add_Client,view_client,client_detail,update_itr,delete_client,edit_client
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -24,11 +24,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/',home),
     path('addclient/',add_Client),
-    path('submit',submit),
     path('viewclient/',view_client),
     path('clientdetail/',client_detail),
     path('updateitr',update_itr),
-    path('deleteclient',delete_client)
+    path('deleteclient',delete_client),
+    path('editclient/',edit_client)
 ] +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

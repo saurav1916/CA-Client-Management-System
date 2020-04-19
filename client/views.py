@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from client.forms import addform
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
@@ -8,32 +8,27 @@ from django.core.files.storage import FileSystemStorage
 # Create your views here.
 def home(request):
     pending=Clientinfo.objects.filter(income_taxreturn=False)
-    
     return render(request,'home.html',{'pending':pending})
 
 
 
 def add_Client(request):
         form=addform()
+        if request.method == "POST":
+            form=addform(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/home/')
+    
         return render(request,'addclient.html',{'acd':form})
 
-
-@csrf_exempt
-def submit(request):
-    if request.method == "POST":
-
-        form=addform(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/home/')
-    return HttpResponseRedirect('/home/')
 
 def view_client(request):
     name=Clientinfo.objects.all()
     return render(request,'viewclients.html',{'list':name})   
 
 def client_detail(request):
-    name1=Clientinfo.objects.filter(name=request.GET['name']).all().values()
+    name1=Clientinfo.objects.filter(id=request.GET['id']).all().values()
     return render(request,'list.html',{'list1':name1})
 
 
@@ -48,3 +43,16 @@ def update_itr(request):
 def delete_client(request):
     Clientinfo.objects.filter(name=request.GET['name']).delete()  
     return HttpResponseRedirect("/viewclient")
+
+
+def edit_client(request):
+    detail=Clientinfo.objects.get(id=request.GET['id'])
+    id=request.GET['id']
+    form= addform(instance=detail)
+    if request.method == "POST":
+        form=addform(request.POST,request.FILES,instance=detail)
+        if form.is_valid():
+            form.save()
+            return redirect("/clientdetail/?id=" +str(id))
+    return render(request,'addclient.html',{"acd":form})
+        
